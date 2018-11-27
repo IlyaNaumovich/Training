@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+/**
+ * @author artsem
+ *
+ */
+module exceptions {
+}
