@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Default Suite">
+  <parameter name="Language" value="fr"/>
+  <test name="Hello world console">
+    <classes>
+      <class name="MarathonTests">
+        <methods>
+          <include name="helloWorldTest"/>
+        </methods>
+      </class> <!-- MarathonTests -->
+    </classes>
+  </test> <!-- Hello world console -->
+</suite> <!-- Default Suite -->
