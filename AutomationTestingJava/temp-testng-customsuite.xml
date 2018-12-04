@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Default Suite">
-  <parameter name="Language" value="fr"/>
+  <!--<parameter name="Language" value="fr"/>-->
+  <parameter name="Language" value="es"/>
   <test name="Hello world console">
     <classes>
       <class name="MarathonTests">
