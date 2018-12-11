@@ -8,6 +8,8 @@
       <class name="MarathonTests">
         <methods>
           <include name="helloWorldTest"/>
+          <include name="negativeLogin"/>
+
         </methods>
       </class> <!-- MarathonTests -->
     </classes>
