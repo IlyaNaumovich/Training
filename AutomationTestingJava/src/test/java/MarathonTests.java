@@ -3,19 +3,23 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
+import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
 
+@Test
 public class MarathonTests {
     private WebDriver driver;
     private String lan;
@@ -32,8 +36,9 @@ public class MarathonTests {
 
     @BeforeMethod(alwaysRun = true)
     @Parameters({"Language"})
-    public void BeforeMethod(@Optional("en") String lang) {
-        driver = new ChromeDriver();
+    public void BeforeMethod(@Optional("en") String lang) throws MalformedURLException {
+        //driver = new ChromeDriver();
+        driver = new RemoteWebDriver(new URL("http://localhost:4444/grid/console"), new ChromeOptions());
         driver.manage().window().maximize();
 
         if (lang == null) {
@@ -88,12 +93,12 @@ public class MarathonTests {
         Assert.assertEquals(actualMessage, realMessage, infoMessage);
     }
 
-    @Test(groups = {"login", "regression"}, priority = 20, dataProvider = "getCredentials")
+    @Test(groups = {"login", "regression"}, priority = 20, dataProvider = "users")
     public void negativeLogin_dataProvider(String login, String password) {
         System.out.println("negativeLogin");
-        driver.findElement(By.id("auth_login")).sendKeys("Hello");
+        driver.findElement(By.id("auth_login")).sendKeys(login);
         driver.findElement(By.id("auth_login")).sendKeys(Keys.TAB);
-        driver.findElement(By.id("auth_login_password")).sendKeys("Hi");
+        driver.findElement(By.id("auth_login_password")).sendKeys(password);
         driver.findElement(By.className("login-pass")).findElement(By.className("btn-login")).click();
 
         String actualMessage = driver.findElement(By.id("any_message")).findElement(By.tagName("p")).getText();
@@ -177,14 +182,27 @@ public class MarathonTests {
         int d = 0;
     }
 
-    @DataProvider
-    public Object [][] getCredentials() {
-        return new Object[][] {
-                {"Hello", "World"},
-                {"Привет", "Валет"},
-                {"1230", "222"},
-                {"sdf1233", "!!!!!"}
+    @DataProvider(name="users", parallel = true)
+    public Object [][] getCredentials(Method m) {
 
-        };
+        if(m.getName().equals("negativeLogin_dataProvider")){
+            System.out.println(m.getName());
+            return new Object[][] {
+                    {"Hello", "World"},
+                    {"Привет", "Валет"},
+                    {"1230", "222"},
+                    {"sdf1233", "!!!!!"}
+
+            };
+        }else{
+            System.out.println("Something else");
+            return new Object[][] {
+                    {"Hello", "World"},
+                    {"Привет", "Валет"},
+                    {"1230", "222"},
+
+            };
+        }
+
     }
 }
