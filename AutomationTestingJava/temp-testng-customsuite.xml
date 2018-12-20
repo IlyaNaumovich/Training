@@ -3,7 +3,10 @@
 <suite name="Default Suite" parallel="methods" thread-count="5">
   <!--<parameter name="Language" value="fr"/>-->
   <parameter name="Language" value="es"/>
-  <test name="Hello world console">
+
+
+  <test name="chrome Hello world console">
+    <parameter name="browserName" value="chrome"/>
     <classes>
       <class name="MarathonTests">
         <methods>
@@ -13,4 +16,16 @@
       </class> <!-- MarathonTests -->
     </classes>
   </test> <!-- Hello world console -->
+
+<!--  <test name="firefox Hello world console">
+    <parameter name="browserName" value="firefox"/>
+    <classes>
+      <class name="MarathonTests">
+        <methods>
+          <include name="negativeLogin_dataProvider"/>
+        </methods>
+      </class> &lt;!&ndash; MarathonTests &ndash;&gt;
+    </classes>
+  </test> &lt;!&ndash; Hello world console &ndash;&gt;-->
+
 </suite> <!-- Default Suite -->
