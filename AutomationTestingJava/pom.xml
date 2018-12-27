@@ -8,6 +8,26 @@
     <artifactId>HW</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <properties>
+        <property1>false</property1>
+        <testng.version>6.8</testng.version>
+        <Language>ru</Language>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.0.0-M3</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>temp-testng-customsuite.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 <dependencies>
     <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
     <dependency>
@@ -29,10 +49,26 @@
     <dependency>
         <groupId>org.testng</groupId>
         <artifactId>testng</artifactId>
-        <version>6.8</version>
+        <version>${testng.version}</version>
         <!--<scope>test</scope>-->
     </dependency>
 
 </dependencies>
 
+    <profiles>
+        <profile>
+            <id>profile1</id>
+            <activation>
+                <os>
+                    <name>Windows</name>
+                    <arch>x64</arch>
+                </os>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>property1</name>
+                    <value>false</value>
+                </property>
+            </activation>
+        </profile>
+    </profiles>
 </project>

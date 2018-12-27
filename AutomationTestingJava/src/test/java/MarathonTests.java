@@ -1,6 +1,6 @@
 import helper.Dictionary;
 import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -41,11 +41,13 @@ public class MarathonTests {
             cap.setCapability("browserName", "chrome");
             cap.setPlatform(Platform.ANY);
 
+
             //driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap);
             drivers.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), cap));
         }else if(browserName.equals("firefox")){
             //driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), new FirefoxOptions());
-            drivers.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), new FirefoxOptions()));
+            //drivers.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), new FirefoxOptions()));
+            drivers.set(new FirefoxDriver());
         }
 
 

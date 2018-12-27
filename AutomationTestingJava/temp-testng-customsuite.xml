@@ -6,7 +6,7 @@
 
 
   <test name="chrome Hello world console">
-    <parameter name="browserName" value="chrome"/>
+    <!--<parameter name="browserName" value="chrome"/>-->
     <classes>
       <class name="MarathonTests">
         <methods>
