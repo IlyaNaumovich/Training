@@ -1,4 +1,5 @@
 import helper.Dictionary;
+import helper.WebDriverSingleton;
 import org.openqa.selenium.*;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.interactions.Actions;
@@ -19,7 +20,8 @@ import java.util.Set;
 
 @Test
 public class MarathonTests {
-    private ThreadLocal<WebDriver> drivers = new ThreadLocal<WebDriver>();
+    //private ThreadLocal<WebDriver> drivers = new ThreadLocal<WebDriver>();
+    private WebDriver driver = WebDriverSingleton.init();
     private String lan;
 
     @BeforeClass
@@ -36,7 +38,7 @@ public class MarathonTests {
     @Parameters({"Language", "browserName"})
     public void BeforeMethod(@Optional("en") String lang,@Optional("chrome") String browserName) throws MalformedURLException {
         //driver = new ChromeDriver();
-        DesiredCapabilities cap = new DesiredCapabilities();
+        /*DesiredCapabilities cap = new DesiredCapabilities();
         if(browserName.equals("chrome")){
             cap.setCapability("browserName", "chrome");
             cap.setPlatform(Platform.ANY);
@@ -48,10 +50,10 @@ public class MarathonTests {
             //driver = new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), new FirefoxOptions());
             //drivers.set(new RemoteWebDriver(new URL("http://localhost:4444/wd/hub"), new FirefoxOptions()));
             drivers.set(new FirefoxDriver());
-        }
+        }*/
 
 
-        drivers.get().manage().window().maximize();
+        driver.manage().window().maximize();
 
         if (lang == null) {
             lang = "en";
@@ -59,7 +61,7 @@ public class MarathonTests {
 
         String url = "https://www.marathonbet.com/%lan%/".replace("%lan%", lang);
 
-        drivers.get().get(url);
+        driver.get(url);
 
         lan = lang;
     }
@@ -76,8 +78,7 @@ public class MarathonTests {
 
     @AfterMethod(alwaysRun = true)
     public void finish() {
-        drivers.get().quit();
-        drivers.set(null);
+        WebDriverSingleton.kill();
     }
 
     @Test(groups = {"search"}, dependsOnMethods = {"negativeLogin"})
