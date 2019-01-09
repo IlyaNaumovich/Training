@@ -13,7 +13,7 @@ import java.net.MalformedURLException;
  */
 public class WebDriverSingleton {
 
-    public static ThreadLocal<WebDriver> driver;
+    public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
 
     private WebDriverSingleton(){
 
@@ -32,19 +32,14 @@ public class WebDriverSingleton {
             factory = new RemoteWebDriverFactory();
         }
 
-        if(driver == null){
-            //driver = new ChromeDriver();
+        if(driver.get() == null){
             driver.set(factory.create());
         }
         return driver.get();
     }
 
-    public static void kill(){
-        if(driver.get() != null){
-            driver.get().close();
-            driver.get().quit();
-            //driver.get() = null;
-        }
-
+    public static void kill() throws MalformedURLException {
+        init().quit();
+        driver.set(null);
     }
 }

@@ -1,10 +1,10 @@
 import helper.Dictionary;
 import helper.WebDriverSingleton;
-import org.openqa.selenium.*;
-import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
@@ -21,7 +21,7 @@ import java.util.Set;
 @Test
 public class MarathonTests {
     //private ThreadLocal<WebDriver> drivers = new ThreadLocal<WebDriver>();
-    private WebDriver driver = WebDriverSingleton.init();
+    private WebDriver driver;
     private String lan;
 
     @BeforeClass
@@ -37,6 +37,7 @@ public class MarathonTests {
     @BeforeMethod(alwaysRun = true)
     @Parameters({"Language", "browserName"})
     public void BeforeMethod(@Optional("en") String lang,@Optional("chrome") String browserName) throws MalformedURLException {
+        driver = WebDriverSingleton.init();
         //driver = new ChromeDriver();
         /*DesiredCapabilities cap = new DesiredCapabilities();
         if(browserName.equals("chrome")){
@@ -77,13 +78,13 @@ public class MarathonTests {
     }
 
     @AfterMethod(alwaysRun = true)
-    public void finish() {
+    public void finish() throws MalformedURLException {
         WebDriverSingleton.kill();
     }
 
     @Test(groups = {"search"}, dependsOnMethods = {"negativeLogin"})
     public void helloWorldTest() {
-        WebDriver driver = drivers.get();
+//        WebDriver driver = drivers.get();
         driver.findElement(By.className("field-search")).sendKeys("Hello world!" + Keys.ENTER);
 
         Assert.assertTrue(driver.findElements(By.className("search-page")).size() > 0, "Search page should be opened");
@@ -95,7 +96,7 @@ public class MarathonTests {
 
     @Test(groups = {"login", "regression"}, priority = 20)
     public void negativeLogin() {
-        WebDriver driver = drivers.get();
+//        WebDriver driver = drivers.get();
         System.out.println("negativeLogin");
         driver.findElement(By.id("auth_login")).sendKeys("Hello");
         driver.findElement(By.id("auth_login")).sendKeys(Keys.TAB);
@@ -111,7 +112,7 @@ public class MarathonTests {
 
     @Test(groups = {"login", "regression"}, priority = 20, dataProvider = "users")
     public void negativeLogin_dataProvider(String login, String password) {
-        WebDriver driver = drivers.get();
+//        WebDriver driver = drivers.get();
         System.out.println("negativeLogin");
         driver.findElement(By.id("auth_login")).sendKeys(login);
         driver.findElement(By.id("auth_login")).sendKeys(Keys.TAB);
@@ -128,7 +129,7 @@ public class MarathonTests {
     @Test(description = "Colour changed",
             groups = {"css", "regression"}, priority = 50)
     public void colorOfLanguageSwitcherChanged() {
-        WebDriver driver = drivers.get();
+//        WebDriver driver = drivers.get();
         System.out.println("colorOfLanguageSwitcherChanged");
         Actions action = new Actions(driver);
         WebElement languageSwitcher = driver.findElement(By.id("languageSelectField"));
@@ -146,7 +147,7 @@ public class MarathonTests {
     @Test(groups = {"css"})
     public void colorOfLanguageSwitcherChangedSoftAssert() {
         SoftAssert softAssert = new SoftAssert();
-        WebDriver driver = drivers.get();
+//        WebDriver driver = drivers.get();
         Actions action = new Actions(driver);
         WebElement languageSwitcher = driver.findElement(By.id("languageSelectField"));
         WebElement languageLabel = languageSwitcher.findElement(By.className("menu-link"));
@@ -165,7 +166,7 @@ public class MarathonTests {
     @Test
     public void verifyLinks() throws IOException {
         Set<String> linkSet = new HashSet<String>();
-        WebDriver driver = drivers.get();
+//        WebDriver driver = drivers.get();
         for (WebElement element : driver.findElements(By.xpath("//*[@href]"))) {
             String ref = element.getAttribute("href");
 
