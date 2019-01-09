@@ -1,15 +1,14 @@
 import helper.Dictionary;
 import helper.WebDriverSingleton;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 
 import javax.net.ssl.HttpsURLConnection;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
@@ -83,13 +82,16 @@ public class MarathonTests {
     }
 
     @Test(groups = {"search"}, dependsOnMethods = {"negativeLogin"})
-    public void helloWorldTest() {
+    public void helloWorldTest() throws IOException {
 //        WebDriver driver = drivers.get();
         driver.findElement(By.className("field-search")).sendKeys("Hello world!" + Keys.ENTER);
 
         Assert.assertTrue(driver.findElements(By.className("search-page")).size() > 0, "Search page should be opened");
 
         String resultValue = driver.findElement(By.className("search-page")).getText();
+
+        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
+        FileUtils.copyFile(scrFile, new File("screenshot" + System.getProperty("headless") + ".png"));
 
         Assert.assertTrue(resultValue.contains("Hello world!"), "Text should contain 'Hello world!'");
     }
