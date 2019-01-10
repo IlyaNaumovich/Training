@@ -1,5 +1,7 @@
 import helper.Dictionary;
 import helper.WebDriverSingleton;
+import pages.MainPage;
+
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
@@ -112,22 +114,38 @@ public class MarathonTests {
         Assert.assertEquals(actualMessage, realMessage, infoMessage);
     }
 
+//    @Test(groups = {"login", "regression"}, priority = 20, dataProvider = "users")
+//    public void negativeLogin_dataProvider(String login, String password) {
+////        WebDriver driver = drivers.get();
+//        System.out.println("negativeLogin");
+//        driver.findElement(By.id("auth_login")).sendKeys(login);
+//        driver.findElement(By.id("auth_login")).sendKeys(Keys.TAB);
+//        driver.findElement(By.id("auth_login_password")).sendKeys(password);
+//        driver.findElement(By.className("login-pass")).findElement(By.className("btn-login")).click();
+//
+//        String actualMessage = driver.findElement(By.id("any_message")).findElement(By.tagName("p")).getText();
+//        String realMessage = Dictionary.getTranslationForDoesntMeetReq(lan);
+//        String infoMessage = String.format("The message should be '%s'", realMessage);
+//
+//        Assert.assertEquals(actualMessage, realMessage, infoMessage);
+//    }
+
     @Test(groups = {"login", "regression"}, priority = 20, dataProvider = "users")
-    public void negativeLogin_dataProvider(String login, String password) {
+    public void negativeLogin_dataProvider(String login, String password) throws MalformedURLException {
 //        WebDriver driver = drivers.get();
         System.out.println("negativeLogin");
-        driver.findElement(By.id("auth_login")).sendKeys(login);
-        driver.findElement(By.id("auth_login")).sendKeys(Keys.TAB);
-        driver.findElement(By.id("auth_login_password")).sendKeys(password);
-        driver.findElement(By.className("login-pass")).findElement(By.className("btn-login")).click();
-
-        String actualMessage = driver.findElement(By.id("any_message")).findElement(By.tagName("p")).getText();
+        MainPage mainPage = new MainPage(WebDriverSingleton.init());
+        
+        mainPage.login(login, password);
+        
+        String actualMessage = mainPage.getPopupMessage();
+        
         String realMessage = Dictionary.getTranslationForDoesntMeetReq(lan);
         String infoMessage = String.format("The message should be '%s'", realMessage);
 
         Assert.assertEquals(actualMessage, realMessage, infoMessage);
     }
-
+    
     @Test(description = "Colour changed",
             groups = {"css", "regression"}, priority = 50)
     public void colorOfLanguageSwitcherChanged() {

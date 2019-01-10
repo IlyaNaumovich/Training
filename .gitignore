@@ -104,3 +104,9 @@ tools/batchtester/target/loader-1.0-SNAPSHOT-jar-with-dependencies.jar
 **/uninstrumented_classes
 bin/custom/eefeaturetoggle/.project
 /.recommenders/
+*/.classpath
+*/.project
+*/.settings/
+MyProject/
+*/target/*
+

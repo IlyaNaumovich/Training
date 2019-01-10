@@ -31,42 +31,46 @@ public class Browser implements WebDriver {
     }
 
     public List<WebElement> findElements(By by) {
-        return null;
+    	System.out.println("Search for Elements by locator: "+by);
+        return driver.findElements(by);
     }
 
     public WebElement findElement(By by) {
-        return null;
+    	System.out.println("Search for Element by locator: "+by);
+        return driver.findElement(by);
     }
 
     public String getPageSource() {
-        return null;
+        return driver.getPageSource();
     }
 
     public void close() {
-
+    	System.out.println("The window is closing");
+    	driver.close();
     }
 
     public void quit() {
-
+    	System.out.println("The browser is closing");
+    	driver.quit();
     }
 
     public Set<String> getWindowHandles() {
-        return null;
+        return driver.getWindowHandles();
     }
 
     public String getWindowHandle() {
-        return null;
+        return driver.getWindowHandle();
     }
 
     public TargetLocator switchTo() {
-        return null;
+        return driver.switchTo();
     }
 
     public Navigation navigate() {
-        return null;
+        return driver.navigate();
     }
 
     public Options manage() {
-        return null;
+        return driver.manage();
     }
 }

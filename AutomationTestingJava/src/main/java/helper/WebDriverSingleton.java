@@ -1,5 +1,6 @@
 package helper;
 
+import helper.decorator.Browser;
 import helper.factory.ChromeDriverFactory;
 import helper.factory.FirefoxDriverFactory;
 import helper.factory.RemoteWebDriverFactory;
@@ -13,13 +14,13 @@ import java.net.MalformedURLException;
  */
 public class WebDriverSingleton {
 
-    public static ThreadLocal<WebDriver> driver = new ThreadLocal<WebDriver>();
+    public static ThreadLocal<Browser> driver = new ThreadLocal<Browser>();
 
     private WebDriverSingleton(){
 
     }
 
-    public static WebDriver init() throws MalformedURLException {
+    public static Browser init() throws MalformedURLException {
 
         WebDriverFactory factory;
         String browserName = System.getProperty("browserName");
@@ -33,7 +34,7 @@ public class WebDriverSingleton {
         }
 
         if(driver.get() == null){
-            driver.set(factory.create());
+            driver.set(new Browser(factory.create()));
         }
         return driver.get();
     }
