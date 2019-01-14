@@ -19,7 +19,6 @@ public class MainPage extends BasePage {
 	}
 	
 	public String getPopupMessage() {
-		
 		return message_popup_element.findElement(By.tagName("p")).getText();
 	}
 }

@@ -5,7 +5,6 @@ import helper.factory.ChromeDriverFactory;
 import helper.factory.FirefoxDriverFactory;
 import helper.factory.RemoteWebDriverFactory;
 import helper.factory.WebDriverFactory;
-import org.openqa.selenium.WebDriver;
 
 import java.net.MalformedURLException;
 
@@ -24,6 +23,9 @@ public class WebDriverSingleton {
 
         WebDriverFactory factory;
         String browserName = System.getProperty("browserName");
+        if (browserName == null) {
+            browserName = "chrome";
+        }
 
         if(browserName.equals("chrome")){
             factory = new ChromeDriverFactory();

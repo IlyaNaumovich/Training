@@ -1,16 +1,16 @@
 import helper.Dictionary;
 import helper.WebDriverSingleton;
-import pages.MainPage;
-
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.*;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
+import pages.MainPage;
+import pages.SearchPage;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.net.HttpURLConnection;
@@ -83,31 +83,55 @@ public class MarathonTests {
         WebDriverSingleton.kill();
     }
 
-    @Test(groups = {"search"}, dependsOnMethods = {"negativeLogin"})
-    public void helloWorldTest() throws IOException {
-//        WebDriver driver = drivers.get();
-        driver.findElement(By.className("field-search")).sendKeys("Hello world!" + Keys.ENTER);
+//    @Test(groups = {"search"}, dependsOnMethods = {"negativeLogin"})
+//    public void helloWorldTest() throws IOException {
+////        WebDriver driver = drivers.get();
+//        driver.findElement(By.className("field-search")).sendKeys("Hello world!" + Keys.ENTER);
+//
+//        Assert.assertTrue(driver.findElements(By.className("search-page")).size() > 0, "Search page should be opened");
+//
+//        String resultValue = driver.findElement(By.className("search-page")).getText();
+//
+//        Assert.assertTrue(resultValue.contains("Hello world!"), "Text should contain 'Hello world!'");
+//    }
 
-        Assert.assertTrue(driver.findElements(By.className("search-page")).size() > 0, "Search page should be opened");
+    @Test(groups = {"search"})
+    public void helloWorldTest() throws MalformedURLException {
+        MainPage mainPage = new MainPage(WebDriverSingleton.init());
+        SearchPage searchPage = new SearchPage(WebDriverSingleton.init());
 
-        String resultValue = driver.findElement(By.className("search-page")).getText();
+        mainPage.search("Hello world");
 
-        File scrFile = ((TakesScreenshot)driver).getScreenshotAs(OutputType.FILE);
-        FileUtils.copyFile(scrFile, new File("screenshot" + System.getProperty("headless") + ".png"));
+        Assert.assertTrue(searchPage.isSearchResultBlockExist(), "Search page should be opened");
+
+        String resultValue = searchPage.getSearchResultBlockText();
 
         Assert.assertTrue(resultValue.contains("Hello world!"), "Text should contain 'Hello world!'");
     }
 
-    @Test(groups = {"login", "regression"}, priority = 20)
-    public void negativeLogin() {
-//        WebDriver driver = drivers.get();
-        System.out.println("negativeLogin");
-        driver.findElement(By.id("auth_login")).sendKeys("Hello");
-        driver.findElement(By.id("auth_login")).sendKeys(Keys.TAB);
-        driver.findElement(By.id("auth_login_password")).sendKeys("Hi");
-        driver.findElement(By.className("login-pass")).findElement(By.className("btn-login")).click();
+//    @Test(groups = {"login", "regression"}, priority = 20)
+//    public void negativeLogin() {
+//        System.out.println("negativeLogin");
+//        driver.findElement(By.id("auth_login")).sendKeys("Hello");
+//        driver.findElement(By.id("auth_login")).sendKeys(Keys.TAB);
+//        driver.findElement(By.id("auth_login_password")).sendKeys("Hi");
+//        driver.findElement(By.className("login-pass")).findElement(By.className("btn-login")).click();
+//
+//        String actualMessage = driver.findElement(By.id("any_message")).findElement(By.tagName("p")).getText();
+//        String realMessage = Dictionary.getTranslationForDoesntMeetReq(lan);
+//        String infoMessage = String.format("The message should be '%s'", realMessage);
+//
+//        Assert.assertEquals(actualMessage, realMessage, infoMessage);
+//    }
 
-        String actualMessage = driver.findElement(By.id("any_message")).findElement(By.tagName("p")).getText();
+    @Test(groups = {"login", "regression"}, priority = 20)
+    public void negativeLogin() throws MalformedURLException {
+        System.out.println("negativeLogin");
+
+        MainPage mainPage = new MainPage(WebDriverSingleton.init());
+        mainPage.login("Hello", "Hi");
+
+        String actualMessage = mainPage.getPopupMessage();
         String realMessage = Dictionary.getTranslationForDoesntMeetReq(lan);
         String infoMessage = String.format("The message should be '%s'", realMessage);
 
@@ -132,7 +156,6 @@ public class MarathonTests {
 
     @Test(groups = {"login", "regression"}, priority = 20, dataProvider = "users")
     public void negativeLogin_dataProvider(String login, String password) throws MalformedURLException {
-//        WebDriver driver = drivers.get();
         System.out.println("negativeLogin");
         MainPage mainPage = new MainPage(WebDriverSingleton.init());
         
@@ -146,21 +169,37 @@ public class MarathonTests {
         Assert.assertEquals(actualMessage, realMessage, infoMessage);
     }
     
+//    @Test(description = "Colour changed",
+//            groups = {"css", "regression"}, priority = 50)
+//    public void colorOfLanguageSwitcherChanged() {
+//        System.out.println("colorOfLanguageSwitcherChanged");
+//        Actions action = new Actions(driver);
+//        WebElement languageSwitcher = driver.findElement(By.id("languageSelectField"));
+//        WebElement languageLabel = languageSwitcher.findElement(By.className("menu-link"));
+//
+//        String initialColour = languageLabel.getCssValue("color");
+//        Assert.assertEquals(initialColour, "rgba(255, 255, 255, 1)", "Colour should be white");
+//
+//        action.moveToElement(languageSwitcher).build().perform();
+//
+//        String finalColour = languageLabel.getCssValue("color");
+//        Assert.assertEquals(finalColour, "rgba(255, 242, 0, 1)", "Colour should be yellow");
+//    }
+
+
     @Test(description = "Colour changed",
             groups = {"css", "regression"}, priority = 50)
-    public void colorOfLanguageSwitcherChanged() {
-//        WebDriver driver = drivers.get();
+    public void colorOfLanguageSwitcherChanged() throws MalformedURLException {
         System.out.println("colorOfLanguageSwitcherChanged");
-        Actions action = new Actions(driver);
-        WebElement languageSwitcher = driver.findElement(By.id("languageSelectField"));
-        WebElement languageLabel = languageSwitcher.findElement(By.className("menu-link"));
 
-        String initialColour = languageLabel.getCssValue("color");
+        MainPage mainPage = new MainPage(WebDriverSingleton.init());
+
+        String initialColour = mainPage.getLanguageColour();
         Assert.assertEquals(initialColour, "rgba(255, 255, 255, 1)", "Colour should be white");
 
-        action.moveToElement(languageSwitcher).build().perform();
+        mainPage.moveToLanguageSwitcher();
 
-        String finalColour = languageLabel.getCssValue("color");
+        String finalColour = mainPage.getLanguageColour();
         Assert.assertEquals(finalColour, "rgba(255, 242, 0, 1)", "Colour should be yellow");
     }
 
