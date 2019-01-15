@@ -30,9 +30,11 @@ public abstract class BasePage {
 	@FindBy(css = "#languageSelectField .menu-link")
 	protected WebElement language_label_element;
 
-	public void moveToLanguageSwitcher() {
+//	public void moveToLanguageSwitcher() {
+	public BasePage moveToLanguageSwitcher() {
 		Actions action = new Actions(driver);
 		action.moveToElement(language_switcher_element).build().perform();
+		return this;
 	}
 
 	public String getLanguageColour() {

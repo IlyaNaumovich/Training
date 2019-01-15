@@ -8,6 +8,7 @@ import org.testng.Assert;
 import org.testng.annotations.*;
 import org.testng.asserts.SoftAssert;
 import pages.MainPage;
+import pages.MainPageMobile;
 import pages.SearchPage;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -18,6 +19,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 @Test
 public class MarathonTests {
@@ -57,6 +59,10 @@ public class MarathonTests {
 
         driver.manage().window().maximize();
 
+        driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
+//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
         if (lang == null) {
             lang = "en";
         }
@@ -94,6 +100,14 @@ public class MarathonTests {
 //
 //        Assert.assertTrue(resultValue.contains("Hello world!"), "Text should contain 'Hello world!'");
 //    }
+
+    @Test
+    public void mobileNegativeLogin() throws MalformedURLException, InterruptedException {
+        MainPageMobile mainPageMobile = new MainPageMobile(WebDriverSingleton.init());
+
+        mainPageMobile.clickLoginMobileButton();
+
+    }
 
     @Test(groups = {"search"})
     public void helloWorldTest() throws MalformedURLException {
@@ -198,8 +212,12 @@ public class MarathonTests {
         Assert.assertEquals(initialColour, "rgba(255, 255, 255, 1)", "Colour should be white");
 
         mainPage.moveToLanguageSwitcher();
+//        mainPage
+//                .moveToLanguageSwitcher()
+//                .getLanguageColour();
 
         String finalColour = mainPage.getLanguageColour();
+//        String finalColour = mainPage.moveToLanguageSwitcher().getLanguageColour();
         Assert.assertEquals(finalColour, "rgba(255, 242, 0, 1)", "Colour should be yellow");
     }
 
