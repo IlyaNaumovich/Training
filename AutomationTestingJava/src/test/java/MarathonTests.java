@@ -1,6 +1,7 @@
 import helper.Dictionary;
 import helper.WebDriverSingleton;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -61,7 +62,7 @@ public class MarathonTests {
 
         driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
-//        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
 
         if (lang == null) {
             lang = "en";
@@ -106,6 +107,22 @@ public class MarathonTests {
         MainPageMobile mainPageMobile = new MainPageMobile(WebDriverSingleton.init());
 
         mainPageMobile.clickLoginMobileButton();
+        mainPageMobile.fillLogin("Hello");
+        mainPageMobile.fillPassword("World");
+        mainPageMobile.fillPassword(Keys.ENTER.toString());
+        mainPageMobile.clickNotRobot();
+
+        int d = 0;
+
+    }
+
+    @Test
+    public void windowsTest() throws MalformedURLException {
+        MainPageMobile mainPageMobile = new MainPageMobile(WebDriverSingleton.init());
+
+        mainPageMobile.ctrlClickJoinUs();
+
+
 
     }
 
