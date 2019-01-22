@@ -19,7 +19,7 @@ public class WebDriverSingleton {
 
     }
 
-    public static Browser init() throws MalformedURLException {
+    public static Browser init(){
 
         WebDriverFactory factory;
         String browserName = System.getProperty("browserName");
@@ -35,9 +35,15 @@ public class WebDriverSingleton {
             factory = new RemoteWebDriverFactory();
         }
 
-        if(driver.get() == null){
-            driver.set(new Browser(factory.create()));
+        try {
+            if(driver.get() == null){
+                driver.set(new Browser(factory.create()));
+            }
+            
+        }catch(MalformedURLException e) {
+        	e.printStackTrace();
         }
+
         return driver.get();
     }
 
