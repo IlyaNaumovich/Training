@@ -6,7 +6,7 @@ Feature: Marathon feature file contains scenarios related to marathonbet.com
 
     @Login
   Scenario: Negative login (imperative)
-    When I enter "Привет!" as a username
+    When I enter "Hello" as a username
     And I enter "World" as a password
     And I click login button
     Then I should see the notification of wrong credentials
@@ -28,6 +28,11 @@ Feature: Marathon feature file contains scenarios related to marathonbet.com
       | Привет   | Валет    |
       | 123      | asd1     |
 
+    Scenario: Search
+      When Я ввожу "Hello World!" в поле поиска
+      And I click search button
+      Then I should be redirected to search page
+      And I see the right text
 
 
 
