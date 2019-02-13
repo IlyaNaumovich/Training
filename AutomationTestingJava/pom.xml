@@ -35,6 +35,14 @@
         <artifactId>selenium-java</artifactId>
         <version>3.141.0</version>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/info.cukes/cucumber-java -->
+    <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>1.2.5</version>
+    </dependency>
+
     <!--<dependency>-->
         <!--<groupId>org.testng</groupId>-->
         <!--<artifactId>testng</artifactId>-->
@@ -58,6 +66,14 @@
         <version>2.6</version>
         <scope>test</scope>
     </dependency>
+
+    <!-- https://mvnrepository.com/artifact/com.codeborne/selenide -->
+    <dependency>
+        <groupId>com.codeborne</groupId>
+        <artifactId>selenide</artifactId>
+        <version>5.1.0</version>
+    </dependency>
+
 
 </dependencies>
 

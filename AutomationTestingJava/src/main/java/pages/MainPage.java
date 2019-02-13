@@ -5,6 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.Assert;
 
 public class MainPage extends BasePage {
 
@@ -19,6 +20,18 @@ public class MainPage extends BasePage {
 	}
 	
 	public String getPopupMessage() {
+		Assert.assertTrue(message_popup_element.isDisplayed(), "Popup element should be displayed");
 		return message_popup_element.findElement(By.tagName("p")).getText();
+	}
+
+	public void open() {
+		String lang = System.getProperty("Language");
+		if (lang == null) {
+			lang = "en";
+		}
+
+		String url = "https://www.marathonbet.com/%lan%/".replace("%lan%", lang);
+
+		driver.get(url);
 	}
 }
