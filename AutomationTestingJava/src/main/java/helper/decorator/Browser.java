@@ -166,4 +166,7 @@ public class Browser implements WebDriver {
         return ((JavascriptExecutor) this.driver).executeScript(s, args);
     }
 
+    public WebDriver getDriver() {
+    	return this.driver;
+    }
 }

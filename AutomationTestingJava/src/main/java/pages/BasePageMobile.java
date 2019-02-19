@@ -33,6 +33,9 @@ public abstract class BasePageMobile {
 	@FindBy(xpath = "//a[contains(@href ,'join')]/span")
 	WebElement joinButton;
 
+	@FindBy(xpath="//button[@data-test='button--submit--enabled']")
+	WebElement popup_login;
+	
 	public void ctrlClickJoinUs() {
 		try {
 			Thread.sleep(3000);
@@ -56,9 +59,14 @@ public abstract class BasePageMobile {
 	}
 
 	public void clickLoginMobileButton() {
+		new WebDriverWait(driver, 10).until(ExpectedConditions.visibilityOf(loginButtonElement));
 		loginButtonElement.click();
 	}
 
+	public void clickPopupLogin() {
+		popup_login.click();
+	}
+	
 	public void fillLogin(String login) {
 		usernameInputElement.sendKeys(login);
 	}
@@ -67,6 +75,11 @@ public abstract class BasePageMobile {
 		passwordInputElement.sendKeys(password);
 	}
 
+	public boolean isCapchaDisplayed() {
+		
+		return notRobotFrame.isDisplayed();
+	}
+	
 	public void clickNotRobot() {
 		WebDriverWait wait =new WebDriverWait(driver, 30);
 		wait.until(ExpectedConditions.visibilityOf(notRobotFrame));

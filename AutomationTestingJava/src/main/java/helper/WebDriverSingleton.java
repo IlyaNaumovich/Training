@@ -1,6 +1,7 @@
 package helper;
 
 import helper.decorator.Browser;
+import helper.factory.AndroidDriverFactory;
 import helper.factory.ChromeDriverFactory;
 import helper.factory.FirefoxDriverFactory;
 import helper.factory.RemoteWebDriverFactory;
@@ -29,9 +30,14 @@ public class WebDriverSingleton {
 
         if(browserName.equals("chrome")){
             factory = new ChromeDriverFactory();
-        } else if(browserName.equals("firefox")){
+        } 
+        else if(browserName.equals("firefox")){
             factory = new FirefoxDriverFactory();
-        } else{
+        } 
+        if(browserName.equals("androidChrome")) {
+        	factory = new AndroidDriverFactory();
+        }
+        else{
             factory = new RemoteWebDriverFactory();
         }
 

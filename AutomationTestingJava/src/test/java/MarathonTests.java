@@ -58,7 +58,7 @@ public class MarathonTests {
         }*/
 
 
-        driver.manage().window().maximize();
+//        driver.manage().window().maximize();
 
         driver.manage().timeouts().setScriptTimeout(10, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(10, TimeUnit.SECONDS);
