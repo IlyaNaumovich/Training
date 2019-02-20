@@ -1,4 +1,5 @@
 import helper.Dictionary;
+import helper.MyLogger;
 import helper.WebDriverSingleton;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -157,8 +158,8 @@ public class MarathonTests {
 
     @Test(groups = {"login", "regression"}, priority = 20)
     public void negativeLogin() throws MalformedURLException {
-        System.out.println("negativeLogin");
-
+        //System.out.println("negativeLogin");
+    	MyLogger.info("negativeLogin");
         MainPage mainPage = new MainPage(WebDriverSingleton.init());
         mainPage.login("Hello", "Hi");
 

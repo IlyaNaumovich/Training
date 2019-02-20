@@ -5,6 +5,8 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
+import helper.MyLogger;
+
 import java.util.List;
 import java.util.Set;
 
@@ -19,7 +21,8 @@ public class Browser implements WebDriver {
         this.driver = driver;
     }
     public void get(String s) {
-        System.out.println("Go to: "+ s);
+        //System.out.println("Go to: "+ s);
+    	MyLogger.info("Go to: "+ s);
         driver.get(s);
     }
 
@@ -32,7 +35,8 @@ public class Browser implements WebDriver {
     }
 
     public List<WebElement> findElements(By by) {
-    	System.out.println("Search for Elements by locator: "+by);
+    	//System.out.println("Search for Elements by locator: "+by);
+    	MyLogger.info("Search for Elements by locator: "+by);
         return driver.findElements(by);
     }
 
@@ -40,7 +44,8 @@ public class Browser implements WebDriver {
 //        String xpath = getAbsoluteXPath(driver.findElement(by));
 //        System.out.println(xpath);
         highlight(driver.findElement(by));
-        System.out.println("Search for Element by locator: "+by);
+        //System.out.println("Search for Element by locator: "+by);
+        MyLogger.info("Search for Element by locator: "+by);
         return driver.findElement(by);
     }
 
@@ -49,12 +54,14 @@ public class Browser implements WebDriver {
     }
 
     public void close() {
-    	System.out.println("The window is closing");
+    	//System.out.println("The window is closing");
+    	MyLogger.info("The window is closing");
     	driver.close();
     }
 
     public void quit() {
-    	System.out.println("The browser is closing");
+    	//System.out.println("The browser is closing");
+    	MyLogger.info("The browser is closing");
     	driver.quit();
     }
 
@@ -138,6 +145,9 @@ public class Browser implements WebDriver {
 
     private void highlight(WebElement element) {
         final int wait = 75;
+        
+        MyLogger.info("Highlight element: "+element);
+        
         String originalStyle = element.getAttribute("style");
         try {
             setAttribute(element, "style",
@@ -154,7 +164,7 @@ public class Browser implements WebDriver {
             Thread.sleep(wait);
             setAttribute(element, "style", originalStyle);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            MyLogger.error(e.getMessage());
         }
     }
 
@@ -163,6 +173,9 @@ public class Browser implements WebDriver {
     }
 
     public Object executeScript(String s, java.lang.Object... args) {
+    	
+    	MyLogger.info("Execute script: "+ s);
+    	
         return ((JavascriptExecutor) this.driver).executeScript(s, args);
     }
 

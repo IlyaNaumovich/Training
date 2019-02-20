@@ -14,6 +14,8 @@ public class ChromeDriverFactory extends WebDriverFactory{
 
     @Override
     public WebDriver create() {
+    	   	
+    	//System.setProperty("webdriver.chrome.driver", "/home/artsem/drivers/chromedriver");
         ChromeOptions options = new ChromeOptions();
         if (System.getProperty("headless") != null) {
             if (System.getProperty("headless").equalsIgnoreCase("true")) {

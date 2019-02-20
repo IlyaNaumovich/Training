@@ -29,25 +29,38 @@ public class WebDriverSingleton {
         }
 
         if(browserName.equals("chrome")){
+        	
+        	MyLogger.debug("ChromeDriver selected");
+        	
             factory = new ChromeDriverFactory();
         } 
         else if(browserName.equals("firefox")){
+        	
+        	MyLogger.debug("FirefoxDriver selected");
+        	
             factory = new FirefoxDriverFactory();
-        } 
-        if(browserName.equals("androidChrome")) {
+        } else if(browserName.equals("androidChrome")) {
+        	
+        	MyLogger.debug("AndroidDriver selected");
+        	
         	factory = new AndroidDriverFactory();
         }
         else{
+        	
+        	MyLogger.debug("RemoteDriver selected");
+        	
             factory = new RemoteWebDriverFactory();
         }
 
         try {
             if(driver.get() == null){
+            	
+            	MyLogger.debug("New browser init");
                 driver.set(new Browser(factory.create()));
             }
             
         }catch(MalformedURLException e) {
-        	e.printStackTrace();
+        	MyLogger.error(e.getMessage());
         }
 
         return driver.get();

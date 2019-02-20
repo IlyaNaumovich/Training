@@ -9,6 +9,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 public class FirefoxDriverFactory extends WebDriverFactory {
     @Override
     public WebDriver create() {
+    	//System.setProperty("webdriver.gecko.driver", "/home/artsem/drivers/geckodriver");
         return new FirefoxDriver();
     }
 }
